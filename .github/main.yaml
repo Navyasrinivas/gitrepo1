@@ -25,7 +25,7 @@ jobs:
 
       - name: Verify Azure CLI
 
-        shell: powershell
+        shell: pwsh
 
         run: az --version
 
@@ -49,19 +49,19 @@ jobs:
 
       - name: Terraform Init
 
-        shell: powershell
+        shell: pwsh
 
         run: terraform init
 
       - name: Terraform Validate
 
-        shell: powershell
+        shell: pwsh
 
         run: terraform validate
 
       - name: Terraform Plan
 
-        shell: powershell
+        shell: pwsh
 
         run: terraform plan -out=tfplan
 
@@ -69,13 +69,13 @@ jobs:
 
         if: github.ref == 'refs/heads/main'
 
-        shell: powershell
+        shell: pwsh
 
         run: terraform apply -auto-approve tfplan
 
       - name: Terraform Output
 
-        shell: powershell
+        shell: pwsh
 
         run: terraform output
  

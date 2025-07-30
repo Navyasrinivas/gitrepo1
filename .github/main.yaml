@@ -1,81 +1,56 @@
-
 name: pipeline
 
 on:
-
   push:
-
     branches: [main]
-
   pull_request:
 
 jobs:
-
   terraform:
-
     runs-on: self-hosted
-
-    environment: Gitpipeline  
+    environment: Gitpipeline
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
 
       - name: Verify Terraform
-
         run: terraform -version
 
       - name: Verify Azure CLI
-
         shell: pwsh
-
         run: az --version
 
       - name: Azure login with Managed Identity
-
         uses: azure/login@v2
-
         with:
-
           auth-type: IDENTITY
-
           client-id: ${{ secrets.ARM_CLIENT_ID }}
-
           tenant-id: ${{ secrets.ARM_TENANT_ID }}
-
           subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-      - name: Checkout code
-
-        uses: actions/checkout@v3
-
       - name: Terraform Init
-
         shell: pwsh
-
         run: terraform init
 
       - name: Terraform Validate
-
         shell: pwsh
-
         run: terraform validate
 
       - name: Terraform Plan
-
         shell: pwsh
-
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-
         if: github.ref == 'refs/heads/main'
-
         shell: pwsh
-
         run: terraform apply -auto-approve tfplan
 
       - name: Terraform Output
-
         shell: pwsh
-
         run: terraform output
- 

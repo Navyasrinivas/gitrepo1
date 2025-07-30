@@ -10,7 +10,7 @@ name = var.resource_group_name
 }
 # Virtual network 
 resource "azurerm_virtual_network" "vnet" {
-name = "windows-vnetfinal"
+name = "windows-vnet1"
 address_space = ["10.0.0.0/16"]
 location = data.azurerm_resource_group.existing.location
 resource_group_name = data.azurerm_resource_group.existing.name
@@ -18,7 +18,7 @@ resource_group_name = data.azurerm_resource_group.existing.name
  
 # Subnet
 resource "azurerm_subnet" "subnet" {
-name = "windowssubnetfinal"
+name = "windowssubnet1"
 resource_group_name = data.azurerm_resource_group.existing.name
 virtual_network_name = azurerm_virtual_network.vnet.name
 address_prefixes = ["10.0.2.0/24"]
@@ -33,7 +33,7 @@ allocation_method = "Static"
  
 # Network interface
 resource "azurerm_network_interface" "nic" {
-name = "windows-nicfinal"
+name = "windows-nic1"
 location = data.azurerm_resource_group.existing.location
 resource_group_name = data.azurerm_resource_group.existing.name
  
@@ -47,12 +47,12 @@ private_ip_address_allocation = "Dynamic"
  
 # VM creation
 resource "azurerm_windows_virtual_machine" "vm" {
-name = "myWindowsVMex"
+name = "windowsvmfinal"
 resource_group_name = data.azurerm_resource_group.existing.name
 location = data.azurerm_resource_group.existing.location
 size = "Standard_D2s_v3"
-admin_username = "azureuser"
-admin_password = "azureuser@123" # Use a secure password
+admin_username = "Navya"
+admin_password = "Rajeevnavya@1127" # Use a secure password
 network_interface_ids = [
 azurerm_network_interface.nic.id,
 ]
@@ -71,4 +71,4 @@ version = "latest"
 # tags
 tags = {
 Environment = "Dev"
-Owner = "xxxx"
+Owner = "Navya"
